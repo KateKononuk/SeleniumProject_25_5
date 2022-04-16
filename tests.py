@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 @pytest.fixture(autouse=True)
 def testing():
-    pytest.driver = webdriver.Chrome("H:/Work/Python/pythonProjects/25_Module/chromedriver.exe")
+    pytest.driver = webdriver.Chrome("./drivers/chromedriver")
     # Переходим на страницу авторизации
     pytest.driver.get('http://petfriends1.herokuapp.com/login')
 
@@ -20,9 +20,9 @@ def test_show_my_pets():
     pytest.driver.implicitly_wait(5)
 
     # Вводим email
-    pytest.driver.find_element_by_id('email').send_keys('guga125@gmail.com')
+    pytest.driver.find_element_by_id('email').send_keys('kate@gmail.com')
     # Вводим пароль
-    pytest.driver.find_element_by_id('pass').send_keys('159753')
+    pytest.driver.find_element_by_id('pass').send_keys('12345')
 
     # Нажимаем на кнопку входа в аккаунт
     pytest.driver.find_element_by_css_selector('button[type="submit"]').click()
@@ -33,14 +33,14 @@ def test_show_my_pets():
     pytest.driver.find_element_by_xpath('//button[@class="navbar-toggler"]').click()
 
     # Нажимаем на кнопку для перехода к списку своих питомцев
-    pytest.driver.find_element_by_xpath('//*[@href="/my_pets"]').click()
+    pytest.driver.find_element_by_xpath('//a[@href="/my_pets"]').click()
 
     # явное ожидание 10 сек.
     WebDriverWait(pytest.driver, 10).until(EC.presence_of_element_located((By.ID, 'all_my_pets')))
 
 
     # Проверяем, что мы оказались на странице со списком своих питомцев
-    assert pytest.driver.find_element_by_tag_name('h2').text == "guga1"
+    assert pytest.driver.find_element_by_tag_name('h2').text == "basik"
 
     # объявляем 4 переменные, в которых записываем все найденные элементы на странице:
     # в images — все картинки питомцев,
